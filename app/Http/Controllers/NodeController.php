@@ -12,7 +12,12 @@ class NodeController extends Controller
      */
     public function index()
     {
-        //
+        $rootNode = Node::where('parent_id', null)->firstOrFail();
+        //$tree = $rootNode->getTreeOfClildren();
+        //$nodes = Node::query();
+        // dd($nodes->get());
+        $html = $this->generateHtmlTree($rootNode, 1);
+        return view('nodes.index', compact('html'));
     }
 
     /**
@@ -61,5 +66,41 @@ class NodeController extends Controller
     public function destroy(Node $node)
     {
         //
+    }
+
+    private function generateHtmlTree(Node $node, int $nestingLevel)
+    {
+        $html = '';
+
+
+
+        if (is_null($node->parent)) {
+            $html = "<ul>-{$node->value}";
+            $nestingLevel++;
+        }
+
+        $hyphenCount = str_repeat('-', $nestingLevel);
+        $nextNestingLevel = $nestingLevel + 1;
+
+        $children = $node->children;
+        if ($children->count()) {
+            $html .= '<ul>';
+
+            foreach ($children as $node) {
+
+                $html .= '<li>' . $hyphenCount . e($node->value);
+
+
+                $html .= $this->generateHtmlTree($node, $nextNestingLevel);
+
+                $html .= '</li>';
+            }
+
+            $html .= '</ul>';
+        }
+        if (is_null($node->parent)) {
+            $html .= '</ul>';
+        }
+        return $html;
     }
 }
