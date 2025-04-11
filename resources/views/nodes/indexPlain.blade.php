@@ -11,13 +11,7 @@
             <li>
                 <h5>
                     {{ $node->value }}
-                    <a data-confirm="Вы уверены?" data-method="delete" href="{{ route('nodes.destroy', $node->id) }}">
-                        &#10006;
-                    </a>
                 </h5>
-
-
-
             </li>
             @endforeach
         </ol>

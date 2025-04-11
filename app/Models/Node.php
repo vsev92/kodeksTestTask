@@ -22,10 +22,10 @@ class Node extends Model
 
     public function getTreeOfClildren(): array
     {
-        $result['nodeValue'] = $this->value;
+        $result['value'] = $this->value;
         $result['children'] = $this->children->map(function ($child) {
-            $child->getTreeOfClildren();
-        });
+            return $child->getTreeOfClildren();
+        })->toArray();
         return $result;
     }
 

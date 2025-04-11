@@ -1,9 +1,9 @@
 <div class="flex flex-col">
     <div>
-        <label for="name">Имя</label>
+        <label for="name">Значение узла</label>
     </div>
     <div class="mt-2">
-        <input class="rounded border-gray-300 w-1/3" type="text" name="name" id="name" value="{{$task->name}}">
+        <input class="rounded border-gray-300 w-1/3" type="text" name="value" id="value" value="{{$node->value}}">
     </div>
     @if ($errors->has('name'))
     <div class="alert alert-danger">
@@ -15,22 +15,16 @@
     </div>
     @endif
     <div class="mt-2">
-        <label for="description">Описание</label>
+        <label for="parent">Имя родительского узла</label>
     </div>
     <div>
-        <textarea class="rounded border-gray-300 w-1/3 h-32" name="description" id="description"> {{$task->description}}</textarea>
-    </div>
-    <div class="mt-2">
-        <label for="status_id">Статус</label>
-    </div>
-    <div>
-        <select class="rounded border-gray-300 w-1/3" name="status_id" id="status_id">
+        <select class="rounded border-gray-300 w-1/3" name="parent" id="parent">
             <option value=""></option>
-            @foreach ($statuses as $taskStatus)
-            @if ($task->status?->id === $taskStatus->id)
-            <option value="{{$taskStatus->id}}" selected="selected"> {{$taskStatus->name}} </option>
+            @foreach ($nodes as $node)
+            @if (is_null($node->parent))
+            <option value="{{$node->id}}" selected="selected"> {{$node->value}} </option>
             @else
-            <option value="{{$taskStatus->id}}"> {{$taskStatus->name}} </option>
+            <option value="{{$node->id}}"> {{$node->value}} </option>
             @endif
             @endforeach
         </select>
@@ -44,33 +38,6 @@
         </ul>
     </div>
     @endif
-    <div class="mt-2">
-        <label for="assigned_to_id">Исполнитель</label>
-    </div>
-    <div>
-        <select class="rounded border-gray-300 w-1/3" name="assigned_to_id" id="assigned_to_id">
-            <option value=""></option>
-            @foreach ($users as $user)
-            @if ($task->executor?->id === $user->id)
-            <option value="{{$user->id}}" selected="selected"> {{$user->name}} </option>
-            @else
-            <option value="{{$user->id}}"> {{$user->name}} </option>
-            @endif
-            @endforeach
-        </select>
-    </div>
-    <div class="mt-2">
-        <label for="labels[]">Метки</label>
-    </div>
-    <div>
-        <select class="rounded border-gray-300 w-1/3 h-32" name="labels[]" id="labels[]" multiple>
-            @foreach($labels as $label)
-            @if ($task->isLabelAttached($label))
-            <option value="{{$label->id}}" selected="selected"> {{$label->name}} </option>
-            @else
-            <option value="{{$label->id}}"> {{$label->name}} </option>
-            @endif
-            @endforeach
-        </select>
-    </div>
+
+
 </div>
