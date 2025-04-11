@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Node extends Model
 {
+    use HasFactory;
+
     public function parent()
     {
         return $this->belongsTo(Node::class, 'parent_id');
@@ -19,18 +22,18 @@ class Node extends Model
 
     public function getTreeOfClildren(): array
     {
-        $result['node'] = $this;
-        $result['children'] = $this->children()->map(fn($child) =>  $child->getTreeOfClildren())->all();
+        $result['nodeValue'] = $this->value;
+        $result['children'] = $this->children->map(function ($child) {
+            $child->getTreeOfClildren();
+        });
         return $result;
     }
 
     public function getListOfClildren(): array
     {
-        $result[] = $this;
-        $clildren = $this->children();
-        $result = [...$result, ...$clildren];
-        $clildren->map(function ($child) use ($result) {
-            $descendants = $child->getListOfClildren()->all();
+        $result[] = $this->value;
+        $this->children->map(function ($child) use ($result) {
+            $descendants = $child->getListOfClildren();
             $result = [...$result, ...$descendants];
         });
         return $result;
@@ -39,10 +42,10 @@ class Node extends Model
     public static function getChildrenById($id): array
     {
         $node = self::findOrFail($id);
-        return $node->children();
+        return $node->children;
     }
 
-    public static function addNode(int $parentId, string $value): array
+    public static function addNode(int $parentId, string $value)
     {
         self::findOrFail($parentId);
         $node = new self();
@@ -50,7 +53,7 @@ class Node extends Model
         $node->save();
     }
 
-    public static function deleteNode(int $id): array
+    public static function deleteNode(int $id)
     {
         $node = self::find($id);
         $node?->delete();

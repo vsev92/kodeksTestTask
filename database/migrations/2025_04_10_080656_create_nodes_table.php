@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('nodes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('parent_id');
-            $table->foreign('parent_id')->references('id')->on('nodes')->onDelete('cascade');
-            $table->string('node_value');
+            $table->bigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')->nullable()->references('id')->on('nodes')->onDelete('cascade');
+            $table->string('value');
             $table->timestamps();
         });
     }
