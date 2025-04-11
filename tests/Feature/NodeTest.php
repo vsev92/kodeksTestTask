@@ -32,7 +32,7 @@ class NodeTest extends TestCase
 
         $tree = $parent->getTreeOfClildren();
         $this->assertIsArray($tree);
-        $this->assertArrayHasKey('nodeValue', $tree);
+        $this->assertArrayHasKey('value', $tree);
         $this->assertArrayHasKey('children', $tree);
     }
 
