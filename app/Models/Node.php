@@ -9,6 +9,11 @@ class Node extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'value',
+        'parent_id',
+    ];
+
     public function parent()
     {
         return $this->belongsTo(Node::class, 'parent_id');

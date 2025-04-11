@@ -42,12 +42,17 @@ class NodeController extends Controller
      */
     public function store(Request $request)
     {
-        $nodesValues = Node::pluck('value');
-        $request->validate([
-            'parent' => ['required', Rule::in($nodesValues)],
+
+        $nodesValues = Node::pluck('parent_id');
+
+        $data = $request->validate([
+            'parent_id' => ['required', Rule::in($nodesValues)],
             'value' => ['required', 'string'],
         ]);
-        Node::create($validated);
+        $node = new Node();
+        $node->fill($data);
+        $node->save();
+
         return redirect()->route('nodes.index')->with('success', 'Узел создан!');
     }
 
