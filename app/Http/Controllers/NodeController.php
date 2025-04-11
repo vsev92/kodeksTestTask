@@ -20,6 +20,12 @@ class NodeController extends Controller
         return view('nodes.index', compact('html'));
     }
 
+    public function indexPlain()
+    {
+        $nodes = Node::paginate(15);
+        return view('nodes.indexPlain', compact('nodes'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
