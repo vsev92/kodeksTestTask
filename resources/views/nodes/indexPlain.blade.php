@@ -8,7 +8,17 @@
     <div class="grid w-[90%] max-w-full px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-28">
         <ol>
             @foreach($nodes as $node)
-            <li>{{ $node->value }}</li>
+            <li>
+                <h5>
+                    {{ $node->value }}
+                    <a data-confirm="Вы уверены?" data-method="delete" href="{{ route('nodes.destroy', $node->id) }}">
+                        &#10006;
+                    </a>
+                </h5>
+
+
+
+            </li>
             @endforeach
         </ol>
     </div>

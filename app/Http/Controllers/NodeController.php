@@ -71,7 +71,10 @@ class NodeController extends Controller
      */
     public function destroy(Node $node)
     {
-        //
+        // dddddd
+        // dd($node);
+        $node->delete();
+        return redirect()->route('nodes.index');
     }
 
     private function generateHtmlTree(Node $node, int $nestingLevel)
