@@ -15,7 +15,6 @@ class NodeController extends Controller
     {
         $rootNode = Node::where('parent_id', null)->firstOrFail();
         $nestingLevel = 1;
-        //$tree = $rootNode->getTreeOfClildren();
         $tree = $rootNode;
         return view('nodes.index', compact('tree', 'nestingLevel'));
     }
@@ -43,7 +42,7 @@ class NodeController extends Controller
     public function store(Request $request)
     {
 
-        $nodesValues = Node::pluck('parent_id');
+        $nodesValues = Node::pluck('id');
 
         $data = $request->validate([
             'parent_id' => ['required', Rule::in($nodesValues)],
@@ -61,7 +60,10 @@ class NodeController extends Controller
      */
     public function show(Node $node)
     {
-        //
+        $rootNode = Node::where('id', $node->id)->firstOrFail();
+        $nestingLevel = 1;
+        $tree = $rootNode;
+        return view('nodes.show', compact('tree', 'nestingLevel'));
     }
 
     /**
