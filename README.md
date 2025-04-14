@@ -5,7 +5,7 @@ test programming task
 
 
 ## Link to production:
-https://php-project-57-10vm.onrender.com/
+https://kodeksTestTask-10vm.onrender.com/
 
 ## Prerequisites
 * Linux
@@ -27,13 +27,13 @@ make install
 ```bash
 cp .env.example .env
 ```
-3. Customize enviroment variables
-    DB_CONNECTION
-    DB_HOST
-    DB_PORT
-    DB_DATABASE
-    DB_USERNAME
-    DB_PASSWORD
+3. Customize enviroment variables:
+   * DB_CONNECTION
+   * DB_HOST
+   * DB_PORT
+   * DB_DATABASE
+   * DB_USERNAME
+   * DB_PASSWORD
   to connect to created database
 
 ## Run frontend
