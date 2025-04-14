@@ -23,44 +23,4 @@ class Node extends Model
     {
         return $this->hasMany(Node::class, 'parent_id');
     }
-
-
-    public function getTreeOfClildren(): array
-    {
-        $result['value'] = $this->value;
-        $result['children'] = $this->children->map(function ($child) {
-            return $child->getTreeOfClildren();
-        })->toArray();
-        return $result;
-    }
-
-    public function getListOfClildren(): array
-    {
-        $result[] = $this->value;
-        $this->children->map(function ($child) use ($result) {
-            $descendants = $child->getListOfClildren();
-            $result = [...$result, ...$descendants];
-        });
-        return $result;
-    }
-
-    public static function getChildrenById($id): array
-    {
-        $node = self::findOrFail($id);
-        return $node->children;
-    }
-
-    public static function addNode(int $parentId, string $value)
-    {
-        self::findOrFail($parentId);
-        $node = new self();
-        $node->value = $value;
-        $node->save();
-    }
-
-    public static function deleteNode(int $id)
-    {
-        $node = self::find($id);
-        $node?->delete();
-    }
 }
