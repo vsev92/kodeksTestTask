@@ -5,7 +5,7 @@ test programming task
 
 
 ## Link to production:
-https://kodeksTestTask-10vm.onrender.com/
+https://kodekstesttask.onrender.com
 
 ## Prerequisites
 * Linux
